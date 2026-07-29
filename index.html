@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الموقع الرسمي لعائلة سامي احميدان ابو لحية</title>
+    
+    <link rel="preconnect" href="https://googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* التنسيق الملكي الفاخر للواجهة الثابتة */
+        body {
+            margin: 0; padding: 0;
+            background: radial-gradient(circle at center, #141414 0%, #070707 100%);
+            color: #ffffff;
+            font-family: 'Amiri', serif;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            text-align: center; height: 100vh;
+            overflow: hidden;
+        }
+
+        .welcome-box {
+            animation: fadeIn 1.5s ease-out forwards;
+        }
+
+        .family-logo {
+            font-size: 3.5rem; color: #d4af37;
+            margin-bottom: 10px;
+            filter: drop-shadow(0 0 15px rgba(212,175,55,0.4));
+        }
+
+        .family-title {
+            font-size: 3.8rem; font-weight: 700;
+            color: #ffffff; margin: 10px 0;
+            text-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+        }
+
+        .family-subtitle {
+            font-size: 1.8rem; color: #b3b3b3;
+            margin-top: 5px; margin-bottom: 40px; font-style: italic;
+        }
+
+        /* حاوية الأزرار الملكية الفخمة بقوة الارتفاع والتوهج */
+        .main-nav-buttons {
+            display: flex;
+            gap: 25px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn-royal-gold {
+            background: transparent;
+            color: #d4af37;
+            border: 2px solid #d4af37;
+            padding: 14px 40px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            cursor: pointer;
+            box-shadow: 0 0 5px rgba(212, 175, 55, 0.1);
+        }
+
+        .btn-royal-gold:hover {
+            background-color: #d4af37;
+            color: #070707;
+            box-shadow: 0 0 25px rgba(212, 175, 55, 0.7);
+            transform: translateY(-4px);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="welcome-box">
+        <div class="family-logo">⚜️</div>
+        <h1 class="family-title">الموقع الرسمي لعائلة</h1>
+        <h2 class="family-subtitle">سامي احميدان ابو لحية</h2>
+        
+        <!-- أزرار التحكم الملكية الثابتة والموجهة للزائر بضغطة زر -->
+        <div class="main-nav-buttons">
+            <!-- الرابط المطور الموجه مباشرة لعنوان جدول الأبناء والأحفاد -->
+            <a href="tree.html#sons-section" class="btn-royal-gold">شجرة العائلة والذرية</a>
+            <a href="#" class="btn-royal-gold">ديوان العائلة</a>
+            <a href="#" class="btn-royal-gold">صندوق الذاكرة</a>
+        </div>
+    </div>
+
+</body>
+</html>
