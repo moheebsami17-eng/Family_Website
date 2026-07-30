@@ -63,8 +63,28 @@
         <!-- 2 -->
         <div class="family-card">
             <div class="card-header"><h3 class="card-name">جودت</h3><span class="card-badge">الفرع 2</span></div>
-            <div class="card-spouse"><span>الزوجة:</span> سوسن</div>
-            <div class="child-sec"><h4>الذرية المباركة:</h4><div class="child-tags"><span class="tag-c">ديانا</span><span class="tag-c">جيهان</span><span class="tag-c">أسماء</span><span class="tag-c">نبيلة</span><span class="tag-c">سهير</span><span class="tag-c">سامي</span></div></div>
+<div class="family-card">
+    <h3 class="card-name"><span class="card-badge">الفرع 2</span>جودت</h3>
+    <div class="card-spouse"><span>الزوجة: سوسن</span></div>
+   <div class="family-card">
+    <h3 class="card-name"><span class="card-badge">الفرع 2</span> جودت</h3>
+    <div class="card-spouse"><span>💍 الزوجة: سوسن</span></div>
+    <div class="child-sec">
+        <h4>
+            <span class="tag-c">ديانا</span>
+            <span class="tag-c">جيهان</span>
+            <span class="tag-c">أسماء</span>
+            <span class="tag-c">نبيلة</span>
+            <span class="tag-c">سهير</span>
+            <span class="tag-c">سامي</span>
+            <span class="tag-c">قيس</span>
+        </h4>
+    </div>
+</div>
+
+
+
+
         </div>
         <!-- 3 -->
         <div class="family-card">
@@ -109,6 +129,32 @@
             <div class="child-sec"><h4>الذرية المباركة:</h4><div class="child-tags"><span class="tag-c">وتين (بنت)</span></div></div>
         </div>
     </div>
+<!-- زر فتح صندوق الذكريات -->
+<button onclick="openMemories()" style="padding: 10px 20px; background-color: #ffc107; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">صندوق الذكريات 📦</button>
+
+<!-- هيكل صندوق الذكريات المنبثق -->
+<div id="memoriesBox" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); z-index: 1000; justify-content: center; align-items: center;">
+    <div style="background-color: #222; padding: 20px; border-radius: 10px; max-width: 80%; max-height: 80%; overflow-y: auto; text-align: center; border: 2px solid #ffc107;">
+        <span onclick="closeMemories()" style="color: white; float: right; font-size: 30px; cursor: pointer;">&times;</span>
+        <h2 style="color: #ffc107; margin-bottom: 20px;">صندوق الذكريات العائلية</h2>
+        
+        <!-- ضع صورك هنا بالأسماء الصحيحة -->
+        <div style="display: flex; flex-wrap: wrap; gap: 15px; justify-content: center;">
+            <img src="images/1000000156.jpg" alt="ذكرى 1" style="width: 200px; border-radius: 8px; border: 2px solid #fff;">
+            <img src="images/1000000190.jpg" alt="ذكرى 2" style="width: 200px; border-radius: 8px; border: 2px solid #fff;">
+        </div>
+    </div>
+</div>
+
+<!-- كود جافاسكربت البسيط لتشغيل الفتح والإغلاق -->
+<script>
+function openMemories() {
+    document.getElementById('memoriesBox').style.display = 'flex';
+}
+function closeMemories() {
+    document.getElementById('memoriesBox').style.display = 'none';
+}
+</script>
 
 </body>
 </html>
