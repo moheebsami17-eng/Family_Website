@@ -77,7 +77,14 @@
             padding: 3px 12px;
             border-radius: 20px;
             display: inline-block;
-            margin-bottom: 12px;
+            margin-bottom: 5px;
+        }
+        .phone-display {
+            font-size: 0.95rem;
+            color: #34495e;
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
         }
         .status-text {
             font-size: 0.9rem;
@@ -85,21 +92,28 @@
             display: block;
             color: #555;
         }
-        .call-btn {
+        /* تصميم الزر الجديد بنظام النسخ الفوري */
+        .copy-btn {
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
-            background-color: #25D366;
+            background-color: #007bff;
             color: white;
-            text-decoration: none;
+            border: none;
+            width: 100%;
             padding: 12px;
             border-radius: 25px;
             font-weight: bold;
-            transition: background 0.2s;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
         }
-        .call-btn:hover {
-            background-color: #128C7E;
+        .copy-btn:hover {
+            background-color: #0056b3;
+        }
+        .copy-btn:active {
+            transform: scale(0.98);
         }
     </style>
 </head>
@@ -108,21 +122,30 @@
     <div class="container">
         <div class="header">
             <h1>📞 دليل اتصال العائلة</h1>
-            <p>تواصل مع أفراد عائلتك بسرعة عبر واتساب</p>
+            <p>انقر على الزر لنسخ رقم الهاتف ومراسلته فوراً</p>
         </div>
 
         <div class="contacts-grid" id="contactsContainer"></div>
     </div>
 
-    <!-- استدعاء ملف البيانات المحدث -->
-    <script src="contacts.js"></script>
+    <!-- كود جلب السكريبت المحدث المانع للـ Cache -->
+    <script src="contacts.js?v=3"></script>
 
     <script>
+        // دالة جافاسكريبت لنسخ الرقم وعرض التنبيه الفوري للمستخدم دون الانتقال لصفحات خارجية
+        function copyNumber(number, name) {
+            navigator.clipboard.writeText(number).then(() => {
+                alert("📋 تم نسخ رقم " + name + " بنجاح!\nالرقم هو: " + number + "\nيمكنك الآن الانتقال لواتساب ولصق الرقم لمراسلته.");
+            }).catch(err => {
+                alert("حدث خطأ أثناء النسخ، الرقم هو: " + number);
+            });
+        }
+
         document.addEventListener("DOMContentLoaded", () => {
             const container = document.getElementById("contactsContainer");
 
-            if (typeof familyContacts !== 'undefined' && familyContacts.length > 0) {
-                familyContacts.forEach(contact => {
+            if (typeof newFamilyContacts !== 'undefined' && newFamilyContacts.length > 0) {
+                newFamilyContacts.forEach(contact => {
                     
                     let statusClass = 'status-offline';
                     let statusTxt = 'غير متصل';
@@ -138,7 +161,6 @@
                     const card = document.createElement("div");
                     card.className = "contact-card";
                     
-                    // قراءة الرابط الجاهز بالكامل من السكريبت مباشرة لتجنب أخطاء المتصفح في دمج النصوص
                     card.innerHTML = '\
                         <div class="avatar-container">\
                             <img src="' + contact.avatar + '" class="avatar" onerror="this.src=\'https://placeholder.com\'">\
@@ -146,15 +168,16 @@
                         </div>\
                         <div class="name">' + contact.name + '</div>\
                         <span class="relation">' + contact.relation + '</span>\
+                        <span class="phone-display">📱 ' + contact.phone + '</span>\
                         <span class="status-text">' + statusTxt + '</span>\
-                        <a href="' + contact.link + '" target="_blank" class="call-btn">\
-                            <span>💬 مراسلة واتساب</span>\
-                        </a>';
+                        <button onclick="copyNumber(\'' + contact.phone + '\', \'' + contact.name + '\')" class="copy-btn">\
+                            <span>📋 نسخ الرقم للواتساب</span>\
+                        </button>';
                     
                     container.appendChild(card);
                 });
             } else {
-                container.innerHTML = "<p style='text-align:center;'>لم يتم العثور على بيانات الاتصال.</p>";
+                container.innerHTML = "<p style='text-align:center;'>جاري تحديث دليل العائلة الجديد...</p>";
             }
         });
     </script>
