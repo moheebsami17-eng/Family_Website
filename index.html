@@ -1,142 +1,117 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <script>
-        var password = prompt("مرحباً بك في موقع العائلة، يرجى إدخال الرقم السري للدخول:");
-        if (password !== "115554") {
-            alert("عذراً، الرقم السري خاطئ!");
-            window.location.href = "https://google.com";
-        }
-    </script>
-
-
-<link rel="stylesheet" href="style.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>الموقع الرسمي لعائلة سامي احميدان ابو لحية</title>
     
+    <!-- استدعاء الخط العربي الفخم بشكل آمن -->
     <link rel="preconnect" href="https://googleapis.com">
     <link rel="preconnect" href="https://gstatic.com" crossorigin>
-    <link href="https://googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
-    
+    <link href="https://googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+
     <style>
-        /* التنسيق الملكي الفاخر للواجهة الثابتة */
-        body {
-            margin: 0; padding: 0;
-            background: radial-gradient(circle at center, #141414 0%, #070707 100%);
-            color: #ffffff;
-            font-family: 'Amiri', serif;
-            display: flex; flex-direction: column;
-            justify-content: center; align-items: center;
-            text-align: center; height: 100vh;
-            overflow: hidden;
-        }
-
-        .welcome-box {
-            animation: fadeIn 1.5s ease-out forwards;
-        }
-
-        .family-logo {
-            font-size: 3.5rem; color: #d4af37;
-            margin-bottom: 10px;
-            filter: drop-shadow(0 0 15px rgba(212,175,55,0.4));
-        }
-
-        .family-title {
-            font-size: 3.8rem; font-weight: 700;
-            color: #ffffff; margin: 10px 0;
-            text-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
-        }
-
-        .family-subtitle {
-            font-size: 1.8rem; color: #b3b3b3;
-            margin-top: 5px; margin-bottom: 40px; font-style: italic;
-        }
-
-        /* حاوية الأزرار الملكية الفخمة بقوة الارتفاع والتوهج */
-        .main-nav-buttons {
+        html { scroll-behavior: smooth; }
+        body { 
+            margin: 0; 
+            padding: 20px 10px; 
+            background-color: #0d0d0d; 
+            color: #ffffff; 
+            font-family: 'Amiri', serif; 
+            text-align: center; 
+            min-height: 100vh;
             display: flex;
-            gap: 25px;
-            flex-wrap: wrap;
+            flex-direction: column;
             justify-content: center;
+            box-sizing: border-box;
+        }
+        
+        .header-title { 
+            color: #d4af37; 
+            font-size: calc(1.8rem + 1vw); /* حجم خط مرن يتكيف مع حجم الشاشة */
+            margin: 5px 0; 
+            font-weight: 700; 
+            text-shadow: 0 4px 12px rgba(212, 175, 55, 0.2); 
+        }
+        
+        .header-subtitle { 
+            color: #b3b3b3; 
+            font-size: calc(1rem + 0.3vw); 
+            margin-top: 0; 
+            margin-bottom: 25px; 
         }
 
-        .btn-royal-gold {
+        /* حاوية الأزرار الرئيسية */
+        .main-nav-buttons { 
+            display: flex; 
+            flex-wrap: wrap; 
+            justify-content: center; 
+            gap: 12px; 
+            max-width: 900px; 
+            margin: 0 auto 20px auto; 
+        }
+
+        /* تنسيق الأزرار الذهبية الملكية للتناسب مع الهواتف */
+        .btn-royal-gold { 
+            display: inline-block; 
+            color: #d4af37; 
+            text-decoration: none; 
+            border: 2px solid #d4af37; 
+            padding: 8px 20px; 
+            font-weight: bold; 
+            font-size: 1rem;
+            border-radius: 4px; 
+            transition: all 0.3s ease; 
             background: transparent;
-            color: #d4af37;
-            border: 2px solid #d4af37;
-            padding: 14px 40px;
-            font-size: 1.3rem;
-            font-weight: bold;
-            text-decoration: none;
-            border-radius: 4px;
-            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-            cursor: pointer;
-            box-shadow: 0 0 5px rgba(212, 175, 55, 0.1);
+            min-width: 140px;
+            box-sizing: border-box;
+        }
+        
+        .btn-royal-gold:hover { 
+            color: #0d0d0d; 
+            background: #d4af37; 
+            box-shadow: 0 0 15px rgba(212,175,55,0.5); 
+            transform: translateY(-2px);
         }
 
-        .btn-royal-gold:hover {
-            background-color: #d4af37;
-            color: #070707;
-            box-shadow: 0 0 25px rgba(212, 175, 55, 0.7);
-            transform: translateY(-4px);
+        /* حاوية زر الاتصال السفلي */
+        .call-btn-container {
+            margin: 20px auto; 
+            text-align: center; 
+            clear: both; 
+            display: block; 
+            width: 100%;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
+        /* تنسيقات إضافية مخصصة لشاشات الجوال الصغيرة جداً */
+        @media (max-width: 480px) {
+            body { padding: 10px 5px; }
+            .main-nav-buttons { gap: 8px; }
+            .btn-royal-gold { width: 90%; font-size: 0.95rem; padding: 8px 10px; }
         }
-
     </style>
 </head>
 <body>
 
-    <div class="welcome-box">
-        <div class="family-logo">⚜️</div>
-        <h1 class="family-title">الموقع الرسمي لعائلة</h1>
-        <h2 class="family-subtitle">سامي احميدان ابو لحية</h2>
-        
-        <!-- أزرار التحكم الملكية الثابتة والموجهة للزائر بضغطة زر -->
-        <div class="main-nav-buttons">
-            <!-- الرابط المطور الموجه مباشرة لعنوان جدول الأبناء والأحفاد -->
-              
-        <div class="main-nav-buttons">
-            <a href="tree.html#sons-section" class="btn-royal-gold">شجرة العائلة والذرية</a>
-            <a href="#" class="btn-royal-gold">ديوان العائلة</a>
-            <a href="memories.html" class="btn-royal-gold">صندوق الذاكرة</a>
-            <a href="quiz.html" class="btn-royal-gold">المسابقة الإسلامية  🕌</a>
-        <a href="kids.html" class="btn-royal-gold">لعبة أطفال العائلة 🎈</a>
-<div style="margin: 30px auto; text-align: center;">
-    <!-- الزر المحدث ليتناسق تماماً مع الأزرار العلوية للموقع -->
-<!-- الزر المحدث لحل مشكلة الشاشة السوداء والاتصال المباشر أونلاين -->
-<div style="margin: 40px auto; text-align: center;">
-   <a href="https://jit.si" target="_blank" style="...">
-        <!-- الرابط المحدث ليتناسق تماماً مع الأزرار العلوية للموقع والربط المباشر -->
-        <div style="margin: 40px auto; text-align: center; clear: both;">
-            <a href="https://jit.si" target="_blank" style="
-                display: inline-block;
-                padding: 12px 35px;
-                background-color: transparent;
-                color: #d4af37;
-                text-decoration: none;
-                border: 2px solid #d4af37;
-                font-family: 'Amiri', serif;
-                font-size: 1.2rem;
-                font-weight: bold;
-                border-radius: 4px;
-                box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-                transition: all 0.3s ease;
-            " onmouseover="this.style.backgroundColor='#d4af37'; this.style.color='#0d0d0d'; this.style.boxShadow='0 0 15px rgba(212,175,55,0.6)';" onmouseout="this.style.backgroundColor='transparent'; this.style.color='#d4af37'; this.style.boxShadow='0 4px 15px rgba(0,0,0,0.5)';">
-                📞 دخول مجلس العائلة المباشر (صوت وفيديو)
-            </a>
-        </div>
+    <!-- شعار العائلة العلوي -->
+    <div style="font-size: 2.5rem; margin-bottom: 5px;">⚜️</div>
+    <h1 class="header-title">الموقع الرسمي لعائلة</h1>
+    <p class="header-subtitle">سامي احميدان ابو لحية</p>
 
+    <!-- الأزرار الخمسة الأساسية المنسقة والمصلحة -->
+    <div class="main-nav-buttons">
+        <a href="tree.html#sons-section" class="btn-royal-gold">🌳 شجرة العائلة والذرية</a>
+        <a href="#" class="btn-royal-gold">📜 ديوان العائلة</a>
+        <a href="memories.html" class="btn-royal-gold">📸 صندوق الذاكرة</a>
+        <a href="quiz.html" class="btn-royal-gold">🕌 المسابقة الإسلامية</a>
+        <a href="kids.html" class="btn-royal-gold">🎈 لعبة أطفال العائلة</a>
+    </div>
 
-</div>
-
-</div>
-
-        </div>
+    <!-- زر الاتصال المباشر المصلح والمحمي بالأسفل -->
+    <div class="call-btn-container">
+        <a href="https://jit.si" target="_blank" class="btn-royal-gold" style="padding: 10px 30px; font-size: 1.1rem; background-color: rgba(212,175,55,0.05); border-color: #e5c158; color: #e5c158;">
+            📞 دخول مجلس العائلة المباشر (صوت وفيديو)
+        </a>
     </div>
 
 </body>
