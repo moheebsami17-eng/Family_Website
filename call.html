@@ -90,6 +90,7 @@
             display: block;
             color: #555;
         }
+        /* تنسيق الزر التفاعلي الجديد */
         .call-btn {
             display: flex;
             align-items: center;
@@ -97,10 +98,13 @@
             gap: 10px;
             background-color: #25D366;
             color: white;
-            text-decoration: none;
+            border: none;
+            width: 100%;
             padding: 12px;
             border-radius: 25px;
             font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
             transition: background 0.2s;
         }
         .call-btn:hover {
@@ -122,6 +126,23 @@
     <script src="callData.js"></script>
 
     <script>
+        // دالة مخصصة وحاسمة تفتح الرابط بأمر نافذة منبثقة مستقلة للتخلص من أي قراءة خاطئة للمتصفح
+        function openWhatsApp(phoneNumber) {
+            // تنظيف الرقم تماماً من الرموز والمسافات
+            let clean = phoneNumber.replace(/[\s+\-]/g, '');
+            
+            // إذا كان الرقم يبدأ بالصفر، نحوله للمفتاح الدولي الافتراضي لفلسطين كما ظهر في صورتك السابقة (970)
+            if (clean.startsWith('0')) {
+                clean = '970' + clean.substring(1); 
+            }
+            
+            // بناء الرابط الصريح والشامل مع البروتوكول الآمن لضمان التوجيه
+            const finalUrl = "https://whatsapp.com" + clean;
+            
+            // فتح الرابط بشكل منبثق إجباري
+            window.open(finalUrl, '_blank');
+        }
+
         document.addEventListener("DOMContentLoaded", () => {
             const container = document.getElementById("contactsContainer");
 
@@ -142,20 +163,10 @@
                         statusTxt = 'غير متصل';
                     }
 
-                    // تنظيف الرقم من المسافات
-                    let cleanPhone = contact.phone.replace(/[\s+\-]/g, '');
-
-                    // التحويل التلقائي للأرقام التي تبدأ بالصفر الافتراضي
-                    if (cleanPhone.startsWith('0')) {
-                        cleanPhone = '970' + cleanPhone.substring(1); 
-                    }
-
-                    // بناء الرابط بالرابط الكامل مع بروتوكول الإنترنت والخط المائل المباشر الآمن
-                    const whatsappUrl = "https://wa.me" + cleanPhone;
-
                     const card = document.createElement("div");
                     card.className = "contact-card";
                     
+                    // هنا نستخدم زر عادي يقوم باستدعاء دالة الجافاسكريبت المباشرة بدلاً من وسم الرابط href القديم
                     card.innerHTML = '\
                         <div class="avatar-container">\
                             <img src="' + contact.avatar + '" alt="' + contact.name + '" class="avatar" onerror="this.src=\'https://placeholder.com\'">\
@@ -164,9 +175,9 @@
                         <div class="name">' + contact.name + '</div>\
                         <span class="relation">' + contact.relation + '</span>\
                         <span class="status-text">' + statusTxt + '</span>\
-                        <a href="' + whatsappUrl + '" target="_blank" class="call-btn">\
+                        <button onclick="openWhatsApp(\'' + contact.phone + '\')" class="call-btn">\
                             <span>💬 مراسلة واتساب</span>\
-                        </a>';
+                        </button>';
                     
                     container.appendChild(card);
                 });
