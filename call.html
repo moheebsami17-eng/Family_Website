@@ -90,7 +90,6 @@
             display: block;
             color: #555;
         }
-        /* تعديل التصميم ليتناسب مع هوية واتساب باللون الأخضر المميز */
         .call-btn {
             display: flex;
             align-items: center;
@@ -106,9 +105,6 @@
         }
         .call-btn:hover {
             background-color: #128C7E;
-        }
-        .call-btn:active {
-            transform: scale(0.98);
         }
     </style>
 </head>
@@ -146,8 +142,14 @@
                         statusTxt = 'غير متصل';
                     }
 
-                    // تنظيف أرقام الهواتف وإزالة المسافات أو الرموز الزائدة لتجنب أي مشاكل عند فتح رابط واتساب
-                    const cleanPhone = contact.phone.replace(/\s+/g, '');
+                    // تنظيف الرقم من أي مسافات أو رموز زائدة مثل +
+                    let cleanPhone = contact.phone.replace(/[\s+\-]/g, '');
+
+                    // ذكي: إذا كان الرقم يبدأ بـ 0، نقوم بتحويله تلقائياً لرمز الدولة المفترض (مثال: 966 للسعودية)
+                    // يمكنك تغيير 966 أدناه إلى رمز دولتك الخاص إذا لزم الأمر (مثل 970 أو 972)
+                    if (cleanPhone.startsWith('0')) {
+                        cleanPhone = '966' + cleanPhone.substring(1);
+                    }
 
                     const card = document.createElement("div");
                     card.className = "contact-card";
@@ -159,7 +161,6 @@
                         <div class="name">${contact.name}</div>
                         <span class="relation">${contact.relation}</span>
                         <span class="status-text">${statusTxt}</span>
-                        <!-- استخدام الرابط المباشر لواتساب وفتح نافذة جديدة target="_blank" -->
                         <a href="https://wa.me{cleanPhone}" target="_blank" class="call-btn">
                             <span>💬 مراسلة واتساب</span>
                         </a>
