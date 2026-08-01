@@ -114,7 +114,7 @@
         <div class="contacts-grid" id="contactsContainer"></div>
     </div>
 
-    <!-- استدعاء ملف البيانات المحفوظ سابقاً -->
+    <!-- استدعاء ملف البيانات المحدث -->
     <script src="contacts.js"></script>
 
     <script>
@@ -135,20 +135,10 @@
                         statusTxt = 'مشغول';
                     }
 
-                    // تنظيف الرقم من المسافات أو الرموز
-                    let cleanPhone = contact.phone.replace(/[\s+\-]/g, '');
-
-                    // التحويل التلقائي إذا بدأ الرقم بصفر ليطابق المفتاح الدولي لبلدك
-                    if (cleanPhone.startsWith('0')) {
-                        cleanPhone = '970' + cleanPhone.substring(1); 
-                    }
-
-                    // هنا قمنا بحل المشكلة عبر كتابة الرابط ككتلة نصية ثابتة كاملة ملتصق بها المتغير مباشرة
-                    var targetLink = "https://wa.me" + cleanPhone;
-
                     const card = document.createElement("div");
                     card.className = "contact-card";
                     
+                    // قراءة الرابط الجاهز بالكامل من السكريبت مباشرة لتجنب أخطاء المتصفح في دمج النصوص
                     card.innerHTML = '\
                         <div class="avatar-container">\
                             <img src="' + contact.avatar + '" class="avatar" onerror="this.src=\'https://placeholder.com\'">\
@@ -157,7 +147,7 @@
                         <div class="name">' + contact.name + '</div>\
                         <span class="relation">' + contact.relation + '</span>\
                         <span class="status-text">' + statusTxt + '</span>\
-                        <a href="' + targetLink + '" target="_blank" class="call-btn">\
+                        <a href="' + contact.link + '" target="_blank" class="call-btn">\
                             <span>💬 مراسلة واتساب</span>\
                         </a>';
                     
