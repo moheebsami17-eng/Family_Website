@@ -3,190 +3,169 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مجلس العائلة الرقمي - اتصال مباشر فيديو وصوت</title>
-    
-    <!-- استدعاء خط Amiri المتناسق مع هوية موقعك -->
-    <link rel="preconnect" href="https://googleapis.com">
-    <link rel="preconnect" href="https://gstatic.com" crossorigin>
-    <link href="https://googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
-    
+    <title>دليل اتصال العائلة</title>
+    <!-- ربط ملف التنسيق الموحد للموقع -->
+    <link rel="stylesheet" href="style.css">
     <style>
+        /* تنسيقات مخصصة لصفحة الاتصال وبطاقات الأفراد */
         body {
-            margin: 0; padding: 0; background-color: #0d0d0d; color: #ffffff;
-            font-family: 'Amiri', serif; text-align: center; height: 100vh;
-            display: flex; flex-direction: column; box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            margin: 0;
+            padding: 20px;
         }
-        .call-header {
-            padding: 15px; background: #141414; border-bottom: 2px solid #d4af37;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
         }
-        .call-header h1 { color: #d4af37; margin: 0 0 5px 0; font-size: 1.8rem; }
-        
-        /* واجهة إدخال الاسم قبل تفعيل الكاميرا */
-        .setup-box {
-            margin: auto; padding: 35px; background: #141414;
-            border: 1px solid rgba(212,175,55,0.3); border-radius: 8px;
-            max-width: 400px; width: 90%; box-shadow: 0 10px 30px rgba(0,0,0,0.7);
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            color: #333;
         }
-        .setup-box input {
-            width: 100%; padding: 12px; margin: 20px 0; background: #222;
-            border: 1px solid #d4af37; color: white; border-radius: 4px;
-            box-sizing: border-box; text-align: center; font-size: 1.1rem; font-family: 'Amiri', serif;
+        .contacts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
         }
-        
-        /* شبكة عرض شاشات الفيديو المباشر */
-        .video-grid {
-            flex: 1; display: flex; flex-wrap: wrap; justify-content: center;
-            align-items: center; gap: 20px; padding: 25px; background: #000;
+        .contact-card {
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            transition: transform 0.3s ease;
         }
-        .video-box {
-            width: 45%; min-width: 290px; height: 320px; background: #111;
-            border: 2px solid #d4af37; border-radius: 8px; position: relative;
-            overflow: hidden; box-shadow: 0 8px 25px rgba(0,0,0,0.6);
+        .contact-card:hover {
+            transform: translateY(-5px);
         }
-        .user-tag {
-            position: absolute; bottom: 12px; right: 12px; background: rgba(0,0,0,0.7);
-            color: #d4af37; padding: 5px 12px; border-radius: 4px; font-size: 0.9rem; z-index: 10;
+        .avatar-container {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 15px;
         }
-        
-        /* لوحة الأزرار السفلية */
-        .controls {
-            padding: 20px; background: #141414; border-top: 1px solid rgba(212,175,55,0.2);
-            display: flex; justify-content: center; gap: 20px;
+        .avatar {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #eee;
         }
-        .btn {
-            background: transparent; color: #d4af37; border: 2px solid #d4af37;
-            padding: 10px 30px; font-family: 'Amiri', serif; font-size: 1.1rem;
-            font-weight: bold; border-radius: 4px; cursor: pointer; transition: all 0.3s;
-            text-decoration: none;
+        /* مؤشرات الحالة */
+        .status-dot {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            border: 3px solid #fff;
         }
-        .btn:hover { color: #0d0d0d; background: #d4af37; box-shadow: 0 0 15px rgba(212,175,55,0.5); }
-        .btn-danger { color: #ff4d4d; border-color: #ff4d4d; }
-        .btn-danger:hover { color: #fff; background: #ff4d4d; box-shadow: 0 0 15px rgba(255,77,77,0.5); }
-    </style>
+        .status-online { background-color: #2ecc71; }
+        .status-busy { background-color: #e74c3c; }
+        .status-offline { background-color: #95a5a6; }
 
-    <!-- استدعاء سكريبت بروتوكول الاتصال المباشر المحدث لحل مشاكل الشاشة السوداء -->
-    <script src="https://jsdelivr.net"></script>
+        .name {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin: 10px 0 5px;
+            color: #2c3e50;
+        }
+        .relation {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+            background: #ecf0f1;
+            padding: 3px 10px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+        .call-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+            border-radius: 25px;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+        .call-btn:hover {
+            background-color: #2980b9;
+        }
+        .status-text {
+            font-size: 0.8rem;
+            margin-bottom: 10px;
+            display: block;
+        }
+    </style>
 </head>
 <body>
 
-    <div class="call-header">
-        <h1>🎙️ مجلس عائلة أبو لحية المباشر</h1>
-        <p style="margin: 0; color: #b3b3b3; font-size: 0.95rem;">برنامج اتصال خاص ومستقل بالصوت والصورة داخل الموقع</p>
-    </div>
-
-    <!-- واجهة الدخول قبل بدء المكالمة -->
-    <div id="setup-area" style="display: flex; flex: 1;">
-        <div class="setup-box">
-            <h3 style="color: #d4af37; margin-top: 0; font-size: 1.4rem;">مرحباً بك في مجلس العائلة</h3>
-            <label for="username" style="color: #ccc;">أدخل اسمك الكريم للانضمام للبث البصري:</label>
-            <input type="text" id="username" placeholder="مثال: ابنكم مهيب" required>
-            <button class="btn" style="width: 100%;" onclick="startCall()">دخول وتفعيل الكاميرا والمايك</button>
+    <div class="container">
+        <div class="header">
+            <h1>📞 دليل اتصال العائلة</h1>
+            <p>تواصل مع أفراد عائلتك بسرعة وسهولة</p>
         </div>
+
+        <!-- هذا الوعاء سيتم تعبئته تلقائياً بالبطاقات عبر الجافاسكريبت -->
+        <div class="contacts-grid" id="contactsContainer"></div>
     </div>
 
-    <!-- شبكة عرض بث كاميرات أفراد العائلة (تظهر بعد إدخال الاسم) -->
-    <div class="video-grid" id="video-streams" style="display: none;">
-        <div class="video-box" id="local-player-wrapper">
-            <div id="local-player" style="width:100%; height:100%;"></div>
-            <div class="user-tag" id="local-tag">أنت</div>
-        </div>
-    </div>
+    <!-- أولاً: استدعاء ملف البيانات الثابتة -->
+    <script src="callData.js"></script>
 
-    <div class="controls" id="controls-area" style="display: none;">
-        <button class="btn btn-danger" onclick="leaveCall()">🔴 إنهاء المكالمة والمغادرة</button>
-        <a href="index.html" class="btn">🏠 القائمة الرئيسية</a>
-    </div>
-
+    <!-- ثانياً: كود السكريبت لإنشاء وتوزيع البطاقات ديناميكياً -->
     <script>
-        // إعدادات البث الآمنة والدائمة المخصصة الحصرية لمشروع عائلتكم
-        const options = {
-            appId: "931215b5e7d54b429d38fa2e0d37e6f8", 
-            channel: "Sami_Ahmeidan_Family_Private_Room_2026", 
-            token: null, 
-            uid: null
-        };
+        document.addEventListener("DOMContentLoaded", () => {
+            const container = document.getElementById("contactsContainer");
 
-        let rtc = {
-            client: null,
-            localAudioTrack: null,
-            localVideoTrack: null
-        };
-
-        async function startCall() {
-            const username = document.getElementById('username').value.trim();
-            if (username === "") {
-                alert("من فضلك أدخل اسمك الكريم أولاً ليعرف أفراد العائلة من يتصل.");
-                return;
-            }
-
-            // تحديث بطاقة الاسم الخاصة بك
-            document.getElementById('local-tag').innerText = username + " (أنت)";
-            
-            // تبديل الواجهات بصرياً
-            document.getElementById('setup-area').style.display = 'none';
-            document.getElementById('video-streams').style.display = 'flex';
-            document.getElementById('controls-area').style.display = 'flex';
-
-            // 1. إنشاء عميل الاتصال وضبط تشفير البث
-            rtc.client = AgoraRTC.createClient({ mode: "rtc", codec: "vp8" });
-
-            // 2. الاستماع اللحظي والمباشر لدخول أي قريب من جهاز آخر وعرض كاميرته فوراً بجانبك
-            rtc.client.on("user-published", async (user, mediaType) => {
-                await rtc.client.subscribe(user, mediaType);
-                if (mediaType === "video") {
-                    const remoteVideoTrack = user.videoTrack;
+            // التحقق من وجود مصفوفة البيانات من ملف callData.js
+            if (typeof familyContacts !== 'undefined' && familyContacts.length > 0) {
+                familyContacts.forEach(contact => {
                     
-                    // منع تكرار النوافذ عند إعادة التحميل
-                    let existBox = document.getElementById(user.uid.toString());
-                    if (existBox) existBox.remove();
+                    // تحديد نص ولون الحالة بناءً على القيمة القادمة من البيانات
+                    let statusClass = '';
+                    let statusTxt = '';
+                    if (contact.status === 'online') {
+                        statusClass = 'status-online';
+                        statusTxt = '🟢 متصل الآن';
+                    } else if (contact.status === 'busy') {
+                        statusClass = 'status-busy';
+                        statusTxt = '🔴 مشغول';
+                    } else {
+                        statusClass = 'status-offline';
+                        statusTxt = '⚫ غير متصل';
+                    }
 
-                    const remotePlayerContainer = document.createElement("div");
-                    remotePlayerContainer.id = user.uid.toString();
-                    remotePlayerContainer.className = "video-box";
-                    remotePlayerContainer.innerHTML = `<div style="width:100%; height:100%;" id="vid-${user.uid}"></div><div class="user-tag">أحد أفراد العائلة متصل الآن</div>`;
-                    document.getElementById("video-streams").appendChild(remotePlayerContainer);
-                    remoteVideoTrack.play(`vid-${user.uid}`);
-                }
-                if (mediaType === "audio") {
-                    user.audioTrack.play();
-                }
-            });
-
-            // مسح إطار الفيديو تلقائياً لأي فرد يغادر المكالمة
-            rtc.client.on("user-unpublished", user => {
-                const remotePlayerContainer = document.getElementById(user.uid.toString());
-                if (remotePlayerContainer) remotePlayerContainer.remove();
-            });
-
-            // 3. الربط الفعلي بالسيرفر وتشغيل الكاميرا والميكروفون الخاص بجهازك
-            try {
-                options.uid = await rtc.client.join(options.appId, options.channel, options.token, null);
-                
-                rtc.localAudioTrack = await AgoraRTC.createMicrophoneAudioTrack();
-                rtc.localVideoTrack = await AgoraRTC.createCameraVideoTrack();
-                
-                // بدء عرض الكاميرا الخاصة بك داخل المربع الذهبي
-                rtc.localVideoTrack.play("local-player");
-                
-                // نشر البث أونلاين لكي تظهر وتُسمع عند بقية الأجهزة فوراً
-                await rtc.client.publish([rtc.localAudioTrack, rtc.localVideoTrack]);
-            } catch (error) {
-                console.error("خطأ في تشغيل العتاد: ", error);
-                alert("يرجى التأكد من الضغط على 'سماح' أو 'Allow' لإذن الكاميرا والمايك في متصفحك لكي يبدأ الاتصال بنجاح.");
+                    // بناء الهيكل البرمجي للبطاقة الخاصة بفرد العائلة
+                    const card = document.createElement("div");
+                    card.className = "contact-card";
+                    card.innerHTML = `
+                        <div class="avatar-container">
+                            <img src="${contact.avatar}" alt="${contact.name}" class="avatar" onerror="this.src='https://placeholder.com'">
+                            <span class="status-dot ${statusClass}"></span>
+                        </div>
+                        <div class="name">${contact.name}</div>
+                        <span class="relation">${contact.relation}</span>
+                        <span class="status-text">${statusTxt}</span>
+                        <a href="tel:${contact.phone}" class="call-btn">
+                            <span>📞 اتصل الآن</span>
+                        </a>
+                    `;
+                    
+                    // إضافة البطاقة داخل شبكة العرض الرئيسية
+                    container.appendChild(card);
+                });
+            } else {
+                container.innerHTML = "<p style='text-align:center; grid-column: 1/-1;'>عذراً، لم يتم العثور على بيانات اتصال.</p>";
             }
-        }
-
-        async function leaveCall() {
-            if(rtc.localAudioTrack) rtc.localAudioTrack.close();
-            if(rtc.localVideoTrack) rtc.localVideoTrack.close();
-            
-            const remoteContainers = document.querySelectorAll(".video-box:not(#local-player-wrapper)");
-            remoteContainers.forEach(container => container.remove());
-            
-            if(rtc.client) await rtc.client.leave();
-            window.location.href = "index.html"; // العودة للرئيسية عند الإغلاق
-        }
+        });
     </script>
 </body>
 </html>
