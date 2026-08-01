@@ -142,14 +142,16 @@
                         statusTxt = 'غير متصل';
                     }
 
-                    // تنظيف الرقم من أي مسافات أو رموز زائدة مثل +
+                    // تنظيف الرقم من المسافات أو الرموز
                     let cleanPhone = contact.phone.replace(/[\s+\-]/g, '');
 
-                    // ذكي: إذا كان الرقم يبدأ بـ 0، نقوم بتحويله تلقائياً لرمز الدولة المفترض (مثال: 966 للسعودية)
-                    // يمكنك تغيير 966 أدناه إلى رمز دولتك الخاص إذا لزم الأمر (مثل 970 أو 972)
+                    // تعديل تلقائي للأرقام التي تبدأ بـ 0 لتناسب الكود الدولي
                     if (cleanPhone.startsWith('0')) {
-                        cleanPhone = '966' + cleanPhone.substring(1);
+                        cleanPhone = '966' + cleanPhone.substring(1); 
                     }
+
+                    // قمنا هنا بفصل وبناء رابط الواتساب بدقة باستخدام دمج النصوص الكلاسيكي الآمن
+                    const whatsappUrl = "https://wa.me" + cleanPhone;
 
                     const card = document.createElement("div");
                     card.className = "contact-card";
@@ -161,7 +163,7 @@
                         <div class="name">${contact.name}</div>
                         <span class="relation">${contact.relation}</span>
                         <span class="status-text">${statusTxt}</span>
-                        <a href="https://wa.me{cleanPhone}" target="_blank" class="call-btn">
+                        <a href="${whatsappUrl}" target="_blank" class="call-btn">
                             <span>💬 مراسلة واتساب</span>
                         </a>
                     `;
