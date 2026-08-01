@@ -101,7 +101,7 @@
             padding: 12px;
             border-radius: 25px;
             font-weight: bold;
-            transition: background 0.2s, transform 0.1s;
+            transition: background 0.2s;
         }
         .call-btn:hover {
             background-color: #128C7E;
@@ -142,31 +142,31 @@
                         statusTxt = 'غير متصل';
                     }
 
-                    // تنظيف الرقم من المسافات أو الرموز
+                    // تنظيف الرقم من المسافات
                     let cleanPhone = contact.phone.replace(/[\s+\-]/g, '');
 
-                    // تعديل تلقائي للأرقام التي تبدأ بـ 0 لتناسب الكود الدولي
+                    // التحويل التلقائي للأرقام التي تبدأ بالصفر الافتراضي
                     if (cleanPhone.startsWith('0')) {
-                        cleanPhone = '966' + cleanPhone.substring(1); 
+                        cleanPhone = '970' + cleanPhone.substring(1); 
                     }
 
-                    // قمنا هنا بفصل وبناء رابط الواتساب بدقة باستخدام دمج النصوص الكلاسيكي الآمن
+                    // بناء الرابط بالرابط الكامل مع بروتوكول الإنترنت والخط المائل المباشر الآمن
                     const whatsappUrl = "https://wa.me" + cleanPhone;
 
                     const card = document.createElement("div");
                     card.className = "contact-card";
-                    card.innerHTML = `
-                        <div class="avatar-container">
-                            <img src="${contact.avatar}" alt="${contact.name}" class="avatar" onerror="this.src='https://placeholder.com'">
-                            <span class="status-dot ${statusClass}"></span>
-                        </div>
-                        <div class="name">${contact.name}</div>
-                        <span class="relation">${contact.relation}</span>
-                        <span class="status-text">${statusTxt}</span>
-                        <a href="${whatsappUrl}" target="_blank" class="call-btn">
-                            <span>💬 مراسلة واتساب</span>
-                        </a>
-                    `;
+                    
+                    card.innerHTML = '\
+                        <div class="avatar-container">\
+                            <img src="' + contact.avatar + '" alt="' + contact.name + '" class="avatar" onerror="this.src=\'https://placeholder.com\'">\
+                            <span class="status-dot ' + statusClass + '"></span>\
+                        </div>\
+                        <div class="name">' + contact.name + '</div>\
+                        <span class="relation">' + contact.relation + '</span>\
+                        <span class="status-text">' + statusTxt + '</span>\
+                        <a href="' + whatsappUrl + '" target="_blank" class="call-btn">\
+                            <span>💬 مراسلة واتساب</span>\
+                        </a>';
                     
                     container.appendChild(card);
                 });
