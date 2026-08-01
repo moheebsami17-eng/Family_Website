@@ -33,10 +33,6 @@
             padding: 20px;
             text-align: center;
             position: relative;
-            transition: transform 0.3s ease;
-        }
-        .contact-card:hover {
-            transform: translateY(-5px);
         }
         .avatar-container {
             position: relative;
@@ -62,7 +58,6 @@
             height: 18px;
             border-radius: 50%;
             border: 3px solid #fff;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
             z-index: 2;
         }
         .status-online { background-color: #2ecc71; }
@@ -119,8 +114,8 @@
         <div class="contacts-grid" id="contactsContainer"></div>
     </div>
 
-    <!-- استدعاء ملف البيانات أولاً -->
-    <script src="callData.js"></script>
+    <!-- استدعاء ملف البيانات المحفوظ سابقاً -->
+    <script src="contacts.js"></script>
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
@@ -129,8 +124,8 @@
             if (typeof familyContacts !== 'undefined' && familyContacts.length > 0) {
                 familyContacts.forEach(contact => {
                     
-                    let statusClass = '';
-                    let statusTxt = '';
+                    let statusClass = 'status-offline';
+                    let statusTxt = 'غير متصل';
                     
                     if (contact.status === 'online') {
                         statusClass = 'status-online';
@@ -138,42 +133,38 @@
                     } else if (contact.status === 'busy') {
                         statusClass = 'status-busy';
                         statusTxt = 'مشغول';
-                    } else {
-                        statusClass = 'status-offline';
-                        statusTxt = 'غير متصل';
                     }
 
-                    // تنظيف رقم الهاتف بالكامل من أي رموز
+                    // تنظيف الرقم من المسافات أو الرموز
                     let cleanPhone = contact.phone.replace(/[\s+\-]/g, '');
 
-                    // إذا كان الرقم يبدأ بـ 0 نقوم بتحويله للمفتاح الدولي (970) ليكون متوافقاً مع أرقام عائلتك
+                    // التحويل التلقائي إذا بدأ الرقم بصفر ليطابق المفتاح الدولي لبلدك
                     if (cleanPhone.startsWith('0')) {
                         cleanPhone = '970' + cleanPhone.substring(1); 
                     }
 
-                    // الرابط المضمون لجميع المتصفحات بدون أي خلط
-                    const whatsappUrl = "https://whatsapp.com" + cleanPhone;
+                    // هنا قمنا بحل المشكلة عبر كتابة الرابط ككتلة نصية ثابتة كاملة ملتصق بها المتغير مباشرة
+                    var targetLink = "https://wa.me" + cleanPhone;
 
-                    // بناء العنصر البرمجي بدقة
                     const card = document.createElement("div");
                     card.className = "contact-card";
                     
                     card.innerHTML = '\
                         <div class="avatar-container">\
-                            <img src="' + contact.avatar + '" alt="' + contact.name + '" class="avatar" onerror="this.src=\'https://placeholder.com\'">\
+                            <img src="' + contact.avatar + '" class="avatar" onerror="this.src=\'https://placeholder.com\'">\
                             <span class="status-dot ' + statusClass + '"></span>\
                         </div>\
                         <div class="name">' + contact.name + '</div>\
                         <span class="relation">' + contact.relation + '</span>\
                         <span class="status-text">' + statusTxt + '</span>\
-                        <a href="' + whatsappUrl + '" target="_blank" class="call-btn">\
+                        <a href="' + targetLink + '" target="_blank" class="call-btn">\
                             <span>💬 مراسلة واتساب</span>\
                         </a>';
                     
                     container.appendChild(card);
                 });
             } else {
-                container.innerHTML = "<p style='text-align:center; grid-column: 1/-1;'>عذراً، لم يتم العثور على بيانات اتصال.</p>";
+                container.innerHTML = "<p style='text-align:center;'>لم يتم العثور على بيانات الاتصال.</p>";
             }
         });
     </script>
