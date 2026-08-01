@@ -1,6 +1,6 @@
 // كود ملف contacts.js المحدث بروابط مباشرة جاهزة
 const familyContacts = [
-    { id: 1, name: "سامي حميدان أبو لحية", relation: "الوالد / عميد العابقة", link: "https://wa.me", avatar: "images/father.png", status: "online" },
+    { id: 1, name: "سامي حميدان أبو لحية", relation: "الوالد / عميد العائلة", link: "https://wa.me", avatar: "images/father.png", status: "online" },
     { id: 2, name: "الوالدة الغالية (أم وائل)", relation: "الوالدة / بركة العائلة", link: "https://wa.me", avatar: "images/mother.png", status: "online" },
     { id: 3, name: "محمد (وائل)", relation: "الفرع 1", link: "https://wa.me", avatar: "images/wael.png", status: "online" },
     { id: 4, name: "جودت", relation: "الفرع 2", link: "https://wa.me", avatar: "images/jawdat.png", status: "busy" },
