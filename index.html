@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>الموقع الرسمي لعائلة سامي احميدان ابو لحية</title>
     
     <!-- استدعاء الخط العربي الفخم بشكل آمن -->
@@ -11,24 +11,35 @@
     <link href="https://googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
 
     <style>
-        html { scroll-behavior: smooth; }
+        html { 
+            scroll-behavior: smooth; 
+        }
         body { 
             margin: 0; 
-            padding: 20px 10px; 
+            padding: 10px; 
             background-color: #0d0d0d; 
             color: #ffffff; 
             font-family: 'Amiri', serif; 
             text-align: center; 
             min-height: 100vh;
+            min-height: 100dvh; /* يتكيف تلقائياً مع شاشات الهواتف ومتصفحاتها */
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: space-between; /* توزيع العناصر بشكل متساوٍ لضمان بقاء الأزرار داخل الشاشة */
+            align-items: center;
             box-sizing: border-box;
+        }
+
+        /* حاوية لتجميع المحتوى العلوي والشعار */
+        .top-section {
+            width: 100%;
+            margin-top: auto;
+            margin-bottom: 15px;
         }
         
         .header-title { 
             color: #d4af37; 
-            font-size: calc(1.8rem + 1vw); /* حجم خط مرن يتكيف مع حجم الشاشة */
+            font-size: calc(1.6rem + 1vw); 
             margin: 5px 0; 
             font-weight: 700; 
             text-shadow: 0 4px 12px rgba(212, 175, 55, 0.2); 
@@ -36,30 +47,31 @@
         
         .header-subtitle { 
             color: #b3b3b3; 
-            font-size: calc(1rem + 0.3vw); 
+            font-size: calc(0.95rem + 0.3vw); 
             margin-top: 0; 
-            margin-bottom: 25px; 
+            margin-bottom: 15px; 
         }
 
-        /* حاوية الأزرار الرئيسية */
+        /* حاوية الأزرار الرئيسية المرنة */
         .main-nav-buttons { 
             display: flex; 
             flex-wrap: wrap; 
             justify-content: center; 
-            gap: 12px; 
-            max-width: 900px; 
-            margin: 0 auto 20px auto; 
+            gap: 10px; 
+            max-width: 800px; 
+            width: 100%;
+            margin: 0 auto;
         }
 
-        /* تنسيق الأزرار الذهبية الملكية للتناسب مع الهواتف */
+        /* تنسيق الأزرار الذهبية الملكية للتناسب الكامل مع أصابع اليد على الهواتف */
         .btn-royal-gold { 
             display: inline-block; 
             color: #d4af37; 
             text-decoration: none; 
             border: 2px solid #d4af37; 
-            padding: 8px 20px; 
+            padding: 8px 16px; 
             font-weight: bold; 
-            font-size: 1rem;
+            font-size: 0.95rem;
             border-radius: 4px; 
             transition: all 0.3s ease; 
             background: transparent;
@@ -71,34 +83,42 @@
             color: #0d0d0d; 
             background: #d4af37; 
             box-shadow: 0 0 15px rgba(212,175,55,0.5); 
-            transform: translateY(-2px);
         }
 
-        /* حاوية زر الاتصال السفلي */
+        /* حاوية زر الاتصال السفلي ليبقى ملتصقاً بالأسفل دائماً */
         .call-btn-container {
-            margin: 20px auto; 
-            text-align: center; 
-            clear: both; 
-            display: block; 
             width: 100%;
+            margin-top: auto;
+            margin-bottom: auto;
+            padding: 15px 0;
         }
 
-        /* تنسيقات إضافية مخصصة لشاشات الجوال الصغيرة جداً */
+        /* تعديلات شاشات الجوال لترتيب الأزرار بشكل طولي عند صغر حجم الشاشة جداً */
         @media (max-width: 480px) {
-            body { padding: 10px 5px; }
-            .main-nav-buttons { gap: 8px; }
-            .btn-royal-gold { width: 90%; font-size: 0.95rem; padding: 8px 10px; }
+            body { padding: 15px 10px; }
+            .main-nav-buttons { 
+                flex-direction: column;
+                align-items: center;
+                gap: 8px; 
+            }
+            .btn-royal-gold { 
+                width: 85%; 
+                font-size: 0.9rem; 
+                padding: 10px; 
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- شعار العائلة العلوي -->
-    <div style="font-size: 2.5rem; margin-bottom: 5px;">⚜️</div>
-    <h1 class="header-title">الموقع الرسمي لعائلة</h1>
-    <p class="header-subtitle">سامي احميدان ابو لحية</p>
+    <!-- الجزء العلوي المحتوي على الشعار والعنوان -->
+    <div class="top-section">
+        <div style="font-size: 2.2rem; margin-bottom: 2px;">⚜️</div>
+        <h1 class="header-title">الموقع الرسمي لعائلة</h1>
+        <p class="header-subtitle">سامي احميدان ابو لحية</p>
+    </div>
 
-    <!-- الأزرار الخمسة الأساسية المنسقة والمصلحة -->
+    <!-- الأزرار الخمسة الأساسية المنسقة والجاهزة للاستخدام -->
     <div class="main-nav-buttons">
         <a href="tree.html#sons-section" class="btn-royal-gold">🌳 شجرة العائلة والذرية</a>
         <a href="#" class="btn-royal-gold">📜 ديوان العائلة</a>
@@ -107,9 +127,9 @@
         <a href="kids.html" class="btn-royal-gold">🎈 لعبة أطفال العائلة</a>
     </div>
 
-    <!-- زر الاتصال المباشر المصلح والمحمي بالأسفل -->
+    <!-- زر الاتصال المباشر السفلي المضمون ظهوره في الأسفل دون اختفاء -->
     <div class="call-btn-container">
-        <a href="https://jit.si" target="_blank" class="btn-royal-gold" style="padding: 10px 30px; font-size: 1.1rem; background-color: rgba(212,175,55,0.05); border-color: #e5c158; color: #e5c158;">
+        <a href="https://jit.si" target="_blank" class="btn-royal-gold" style="padding: 10px 30px; font-size: 1.05rem; background-color: rgba(212,175,55,0.05); border-color: #e5c158; color: #e5c158; width: auto; min-width: 200px;">
             📞 دخول مجلس العائلة المباشر (صوت وفيديو)
         </a>
     </div>
