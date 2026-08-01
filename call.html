@@ -44,7 +44,7 @@
             height: 100px;
             margin: 0 auto 15px;
             border-radius: 50%;
-            background-color: #eee; /* خلفية رمادية خفيفة في حال عدم وجود صورة */
+            background-color: #eee;
         }
         .avatar {
             width: 100%;
@@ -54,7 +54,6 @@
             border: 3px solid #fff;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
-        /* تثبيت مؤشر الحالة بشكل صحيح على زاوية الصورة الدائرية */
         .status-dot {
             position: absolute;
             bottom: 2px;
@@ -91,12 +90,13 @@
             display: block;
             color: #555;
         }
+        /* تعديل التصميم ليتناسب مع هوية واتساب باللون الأخضر المميز */
         .call-btn {
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
-            background-color: #3498db;
+            background-color: #25D366;
             color: white;
             text-decoration: none;
             padding: 12px;
@@ -105,7 +105,7 @@
             transition: background 0.2s, transform 0.1s;
         }
         .call-btn:hover {
-            background-color: #2980b9;
+            background-color: #128C7E;
         }
         .call-btn:active {
             transform: scale(0.98);
@@ -117,16 +117,14 @@
     <div class="container">
         <div class="header">
             <h1>📞 دليل اتصال العائلة</h1>
-            <p>تواصل مع أفراد عائلتك بسرعة وسهولة</p>
+            <p>تواصل مع أفراد عائلتك بسرعة عبر واتساب</p>
         </div>
 
         <div class="contacts-grid" id="contactsContainer"></div>
     </div>
 
-    <!-- استدعاء ملف البيانات الثابتة -->
     <script src="callData.js"></script>
 
-    <!-- كود السكريبت المحدث لتوزيع البطاقات بشكل صحيح ونظيف -->
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const container = document.getElementById("contactsContainer");
@@ -148,6 +146,9 @@
                         statusTxt = 'غير متصل';
                     }
 
+                    // تنظيف أرقام الهواتف وإزالة المسافات أو الرموز الزائدة لتجنب أي مشاكل عند فتح رابط واتساب
+                    const cleanPhone = contact.phone.replace(/\s+/g, '');
+
                     const card = document.createElement("div");
                     card.className = "contact-card";
                     card.innerHTML = `
@@ -158,8 +159,9 @@
                         <div class="name">${contact.name}</div>
                         <span class="relation">${contact.relation}</span>
                         <span class="status-text">${statusTxt}</span>
-                        <a href="tel:${contact.phone}" class="call-btn">
-                            <span>📞 اتصل الآن</span>
+                        <!-- استخدام الرابط المباشر لواتساب وفتح نافذة جديدة target="_blank" -->
+                        <a href="https://wa.me{cleanPhone}" target="_blank" class="call-btn">
+                            <span>💬 مراسلة واتساب</span>
                         </a>
                     `;
                     
