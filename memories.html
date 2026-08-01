@@ -2,100 +2,168 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>صندوق الذاكرة - عائلة سامي حميدان أبو لحية</title>
+    <title>صندوق الذاكرة العائلية</title>
+    <link rel="stylesheet" href="style.css">
+    
     <style>
         body {
-            background-color: #000;
-            color: #fff;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            text-align: center;
-            padding: 40px 20px;
+            font-family: sans-serif;
+            background-color: #f4f4f4;
             margin: 0;
+            padding: 20px;
         }
         h1 {
-            color: #ffc107;
-            font-size: 2.5rem;
-            margin-bottom: 30px;
-            text-shadow: 0 0 10px rgba(255, 193, 7, 0.3);
+            text-align: center;
+            color: #333;
         }
+        /* تنسيق شبكة الصور الصغيرة لكي لا تظهر ضخمة */
         .gallery-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            justify-content: center;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        .gallery-item {
-            background-color: #111;
-            border: 2px solid #ffc107;
-            border-radius: 10px;
-            overflow: hidden;
-            width: 280px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .gallery-item:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 15px rgba(255, 193, 7, 0.5);
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            padding: 20px;
         }
         .gallery-item img {
             width: 100%;
-            height: 220px;
+            height: 200px;
             object-fit: cover;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.2s, opacity 0.2s;
+        }
+        .gallery-item img:hover {
+            transform: scale(1.05);
+            opacity: 0.9;
+        }
+        /* تنسيق النافذة السوداء المنبثقة */
+        .modal {
+            display: none; 
+            position: fixed; 
+            z-index: 1000; 
+            padding-top: 50px; 
+            left: 0;
+            top: 0;
+            width: 100%; 
+            height: 100%; 
+            overflow: auto; 
+            background-color: rgba(0, 0, 0, 0.9); 
+        }
+        .modal-content {
+            margin: auto;
             display: block;
+            max-width: 80%;
+            max-height: 80vh;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
+            animation: zoomIn 0.3s ease-in-out;
+        }
+        @keyframes zoomIn {
+            from { transform: scale(0); opacity: 0; } 
+            to { transform: scale(1); opacity: 1; }
+        }
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            left: 35px;
+            color: #ffffff;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .close-btn:hover {
+            color: #ff4d4d; 
+        }
+        #caption {
+            margin: auto;
+            display: block;
+            width: 80%;
+            text-align: center;
+            color: #dddddd;
+            padding: 15px 0;
+            font-size: 20px;
         }
         .back-btn {
             display: inline-block;
-            margin-top: 40px;
-            padding: 12px 30px;
-            background-color: transparent;
-            color: #ffc107;
-            border: 2px solid #ffc107;
-            border-radius: 5px;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #333;
+            color: #fff;
             text-decoration: none;
-            font-weight: bold;
-            transition: 0.3s;
-        }
-        .back-btn:hover {
-            background-color: #ffc107;
-            color: #000;
+            border-radius: 5px;
         }
     </style>
 </head>
 <body>
 
-    <h1>📸 صندوق الذاكرة العائلية (100 ذكرى)</h1>
-    
-    <!-- هذه الحاوية سيتم ملؤها بـ 100 صورة تلقائياً بواسطة الكود الذكي بالأسفل -->
+    <h1>صندوق الذاكرة العائلية (100 ذكرى)</h1>
+
+    <!-- الحاوية التي سيتم ملؤها بـ 100 صورة تلقائياً -->
     <div class="gallery-container" id="familyGallery"></div>
 
     <br>
     <a href="index.html" class="back-btn">⬅️ العودة للموقع الرسمي</a>
 
-    <!-- الكود الذكي لتوليد 100 صورة بدون تعب -->
+    <!-- نافذة عرض الصورة الكبيرة (Modal) -->
+    <div id="imageModal" class="modal">
+        <span class="close-btn" onclick="closeModal()">&times;</span>
+        <img class="modal-content" id="fullImage">
+        <div id="caption"></div>
+    </div>
+
+    <!-- الكود الذكي لتوليد 100 صورة والتحكم بتكبيرها -->
     <script>
         const gallery = document.getElementById('familyGallery');
-        
-        // نصيحة: أسهل طريقة هي إعادة تسمية صورك في المجلد من 1 إلى 100
-        // هذا الكود يفترض أن أسماء صورك هي: 1.jpg, 2.jpg, 3.jpg ... حتى 100.jpg
+
+        // كود توليد الصور تلقائياً من 1 إلى 100
         for (let i = 1; i <= 100; i++) {
             const item = document.createElement('div');
             item.className = 'gallery-item';
-            
+
             const img = document.createElement('img');
-            img.src = `images/${i}.jpg`; // مسار الصورة تلقائياً
+            img.src = `images/${i}.jpg`; // مسار الصور التلقائي
             img.alt = `ذكرى عائلية رقم ${i}`;
-            
-            // في حال لم تكن الصورة موجودة أو هناك نقص في الأرقام، لن تظهر أيقونة مكسورة بل سيتم تخطيها
+
+            // إضافة ميزة التكبير عند الضغط على الصورة
+            img.onclick = function() { 
+                openModal(this); 
+            };
+
+            // إخفاء حاوية الصورة إذا كانت الصورة غير موجودة أو معطوبة
             img.onerror = function() {
                 this.parentElement.style.display = 'none';
             };
-            
+
             item.appendChild(img);
             gallery.appendChild(item);
+        }
+
+        // دالة فتح الصورة الكبيرة
+        function openModal(element) {
+            var modal = document.getElementById("imageModal");
+            var modalImg = document.getElementById("fullImage");
+            var captionText = document.getElementById("caption");
+            
+            modal.style.display = "block"; 
+            modalImg.src = element.src;    
+            captionText.innerHTML = element.alt; 
+        }
+
+        // دالة إغلاق النافذة
+        function closeModal() {
+            var modal = document.getElementById("imageModal");
+            modal.style.display = "none"; 
+        }
+
+        // إغلاق النافذة عند الضغط في أي مكان فارغ خارج الصورة
+        window.onclick = function(event) {
+            var modal = document.getElementById("imageModal");
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
         }
     </script>
 
 </body>
 </html>
+
 

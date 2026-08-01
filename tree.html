@@ -6,7 +6,7 @@
     <title>شجرة عائلة سامي احميدان ابو لحية</title>
     <link rel="preconnect" href="https://googleapis.com">
     <link rel="preconnect" href="https://gstatic.com" crossorigin>
-    <link href="https://googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://googleapis.com" rel="stylesheet">
     <style>
         html { scroll-behavior: smooth; }
         body { margin: 0; padding: 50px 10px; background-color: #0d0d0d; color: #ffffff; font-family: 'Amiri', serif; text-align: center; }
@@ -19,8 +19,20 @@
         .parent-name { font-size: 1.6rem; font-weight: bold; margin: 0; }
         .parent-title { font-size: 1rem; color: #d4af37; margin-top: 5px; }
         .sons-anchor { color: #d4af37; font-size: 2rem; margin: 25px 0 10px 0; font-weight: 700; }
-        .family-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; width: 100%; max-width: 1150px; margin: 0 auto; padding: 15px 0; }
-        .family-card { background: linear-gradient(145deg, #111, #161616); border: 1px solid rgba(212,175,55,0.3); border-radius: 6px; padding: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.5); text-align: right; box-sizing: border-box; transition: all 0.3s; }
+        
+        /* التعديل الجديد المنسق لفروع الشجرة */
+        .family-grid { 
+            display: flex; 
+            flex-wrap: wrap; 
+            justify-content: center; 
+            gap: 25px; 
+            width: 100%; 
+            max-width: 1200px; 
+            margin: 0 auto; 
+            padding: 20px 0; 
+        }
+        
+        .family-card { background: linear-gradient(145deg, #111, #161616); border: 1px solid rgba(212,175,55,0.3); border-radius: 6px; padding: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.5); text-align: right; box-sizing: border-box; transition: all 0.3s; width: 100%; max-width: 340px; }
         .family-card:hover { border-color: #d4af37; box-shadow: 0 12px 25px rgba(212,175,55,0.15); transform: translateY(-4px); }
         .card-header { display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(212,175,55,0.2); padding-bottom: 8px; margin-bottom: 12px; }
         .card-name { font-size: 1.3rem; font-weight: bold; color: #ffffff; margin: 0; }
@@ -31,6 +43,9 @@
         .child-sec h4 { color: #a6a6a6; margin: 0 0 8px 0; font-size: 1rem; }
         .child-tags { display: flex; flex-wrap: wrap; gap: 6px; }
         .tag-c { background: rgba(255,255,255,0.04); color: #ffffff; padding: 4px 12px; border-radius: 4px; font-size: 1rem; border: 1px solid rgba(255,255,255,0.08); }
+        
+        /* تجميل زر صندوق الذكريات المدمج */
+        .memories-btn-container { margin: 40px auto; }
     </style>
 </head>
 <body>
@@ -60,73 +75,67 @@
             <div class="card-spouse"><span>الزوجة:</span> نرجس</div>
             <div class="child-sec"><h4>الذرية المباركة:</h4><div class="child-tags"><span class="tag-c">سامي</span></div></div>
         </div>
+        
         <!-- 2 -->
         <div class="family-card">
             <div class="card-header"><h3 class="card-name">جودت</h3><span class="card-badge">الفرع 2</span></div>
-<<<<<<< HEAD
-<div class="family-card">
-    <h3 class="card-name"><span class="card-badge">الفرع 2</span>جودت</h3>
-    <div class="card-spouse"><span>الزوجة: سوسن</span></div>
-   <div class="family-card">
-    <h3 class="card-name"><span class="card-badge">الفرع 2</span> جودت</h3>
-    <div class="card-spouse"><span>💍 الزوجة: سوسن</span></div>
-    <div class="child-sec">
-        <h4>
-            <span class="tag-c">ديانا</span>
-            <span class="tag-c">جيهان</span>
-            <span class="tag-c">أسماء</span>
-            <span class="tag-c">نبيلة</span>
-            <span class="tag-c">سهير</span>
-            <span class="tag-c">سامي</span>
-            <span class="tag-c">قيس</span>
-        </h4>
-    </div>
-</div>
-
-
-
-
-=======
             <div class="card-spouse"><span>الزوجة:</span> سوسن</div>
-            <div class="child-sec"><h4>الذرية المباركة:</h4><div class="child-tags"><span class="tag-c">ديانا</span><span class="tag-c">جيهان</span><span class="tag-c">أسماء</span><span class="tag-c">نبيلة</spa><span class="tag-c">سهير</span><span class="tag-c">قيس</span><span class="tag-c">سامي</span></div></div>
->>>>>>> origin/main
+            <div class="child-sec">
+                <h4>الذرية المباركة:</h4>
+                <div class="child-tags">
+                    <span class="tag-c">ديانا</span>
+                    <span class="tag-c">جيهان</span>
+                    <span class="tag-c">أسماء</span>
+                    <span class="tag-c">نبيلة</span>
+                    <span class="tag-c">سهير</span>
+                    <span class="tag-c">قيس</span>
+                    <span class="tag-c">سامي</span>
+                </div>
+            </div>
         </div>
+        
         <!-- 3 -->
         <div class="family-card">
             <div class="card-header"><h3 class="card-name">جيهان</h3><span class="card-badge">الفرع 3</span></div>
             <div class="card-spouse"><span>الزوج:</span> محمد أبو دقة</div>
             <div class="child-sec"><h4>الذرية المباركة:</h4><div class="child-tags"><span class="tag-c">جنة</span><span class="tag-c">وئام</span><span class="tag-c">غنة</span><span class="tag-c">حلا</span><span class="tag-c">أيهم</span></div></div>
         </div>
+        
         <!-- 4 -->
         <div class="family-card">
             <div class="card-header"><h3 class="card-name">أسماء</h3><span class="card-badge">الفرع 4</span></div>
             <div class="card-spouse"><span>الزوج:</span> محمود الأسطل</div>
             <div class="child-sec"><h4>الذرية المباركة:</h4><div class="child-tags"><span class="tag-c">أمير</span><span class="tag-c">وائل</span><span class="tag-c">صهيب</span><span class="tag-c">عبدالله</span><span class="tag-c">جنة</span></div></div>
         </div>
+        
         <!-- 5 -->
         <div class="family-card">
             <div class="card-header"><h3 class="card-name">عبدالرحمن</h3><span class="card-badge">الفرع 5</span></div>
             <div class="card-spouse"><span>الزوجة:</span> مها أبو دقة</div>
             <div class="child-sec"><h4>الذرية المباركة:</h4><div class="child-tags"><span class="tag-c">سامي</span><span class="tag-c">روان</span><span class="tag-c">محمد</span></div></div>
         </div>
+        
         <!-- 6 -->
         <div class="family-card">
             <div class="card-header"><h3 class="card-name">عبدالله</h3><span class="card-badge">الفرع 6</span></div>
             <div class="card-spouse"><span>الزوجة:</span> ديانا أبو عكر</div>
             <div class="child-sec"><h4>الذرية المباركة:</h4><div class="child-tags"><span class="tag-c">سامي</span><span class="tag-c">لانا</span><span class="tag-c">محمد</span><span class="tag-c">كنان</span></div></div>
         </div>
+
         <!-- 7 -->
         <div class="family-card">
             <div class="card-header"><h3 class="card-name">مهيب</h3><span class="card-badge">الفرع 7</span></div>
             <div class="card-spouse"><span>الزوجة:</span> آلاء أبو دقة</div>
             <div class="child-sec"><h4>الذرية المباركة:</h4><div class="child-tags"><span class="tag-c">ميرا</span><span class="tag-c">تلين</span><span class="tag-c">سامي</span></div></div>
         </div>
+        
         <!-- 8 -->
         <div class="family-card" style="border-color:rgba(212,175,55,0.6);">
             <div class="card-header"><h3 class="card-name" style="color:#d4af37;">يوسف</h3><span class="card-badge">الفرع 8</span></div>
             <div class="card-spouse"><span>الزوجة:</span> سوسن أبو لحية</div>
             <div class="child-sec"><h4>الذرية المباركة:</h4><div class="child-tags"><span class="tag-c">دارين</span><span class="tag-c">سامي</span><span class="tag-c">أحمد</span></div></div>
         </div>
+        
         <!-- 9 -->
         <div class="family-card" style="border-color:rgba(212,175,55,0.6);">
             <div class="card-header"><h3 class="card-name" style="color:#d4af37;">أحمد</h3><span class="card-badge">الفرع 9</span></div>
@@ -134,32 +143,13 @@
             <div class="child-sec"><h4>الذرية المباركة:</h4><div class="child-tags"><span class="tag-c">وتين (بنت)</span></div></div>
         </div>
     </div>
-<!-- زر فتح صندوق الذكريات -->
-<button onclick="openMemories()" style="padding: 10px 20px; background-color: #ffc107; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">صندوق الذكريات 📦</button>
 
-<!-- هيكل صندوق الذكريات المنبثق -->
-<div id="memoriesBox" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); z-index: 1000; justify-content: center; align-items: center;">
-    <div style="background-color: #222; padding: 20px; border-radius: 10px; max-width: 80%; max-height: 80%; overflow-y: auto; text-align: center; border: 2px solid #ffc107;">
-        <span onclick="closeMemories()" style="color: white; float: right; font-size: 30px; cursor: pointer;">&times;</span>
-        <h2 style="color: #ffc107; margin-bottom: 20px;">صندوق الذكريات العائلية</h2>
-        
-        <!-- ضع صورك هنا بالأسماء الصحيحة -->
-        <div style="display: flex; flex-wrap: wrap; gap: 15px; justify-content: center;">
-            <img src="images/1000000156.jpg" alt="ذكرى 1" style="width: 200px; border-radius: 8px; border: 2px solid #fff;">
-            <img src="images/1000000190.jpg" alt="ذكرى 2" style="width: 200px; border-radius: 8px; border: 2px solid #fff;">
-        </div>
+    <!-- زر فتح صندوق الذكريات -->
+    <div class="memories-btn-container">
+        <button onclick="openMemories()" style="padding: 12px 30px; background-color: #ffc107; border: none; border-radius: 25px; cursor: pointer; font-weight: bold; font-size: 1.1rem; box-shadow: 0 4px 10px rgba(255,193,7,0.3); transition: all 0.2s;">صندوق الذكريات 📦</button>
     </div>
-</div>
 
-<!-- كود جافاسكربت البسيط لتشغيل الفتح والإغلاق -->
-<script>
-function openMemories() {
-    document.getElementById('memoriesBox').style.display = 'flex';
-}
-function closeMemories() {
-    document.getElementById('memoriesBox').style.display = 'none';
-}
-</script>
-
-</body>
-</html>
+    <!-- هيكل صندوق الذكريات المنبثق -->
+    <div id="memoriesBox" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); z-index: 1000; justify-content: center; align-items: center;">
+        <div style="background-color: #222; padding: 20px; border-radius: 10px; max-width: 80%; max-height: 80%; overflow-y: auto; text-align: center; border: 2px solid #ffc107;">
+            <span onclick="closeMemories()" style="color: white; float: right; font-size: 30px; cursor: pointer; padding: 0 10px;">&times;</span>
