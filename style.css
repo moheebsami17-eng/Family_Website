@@ -80,3 +80,82 @@ body {
   opacity: 0.8;
   transform: scale(1.02);
 }
+
+/* تنسيق صندوق الدردشة */
+.chat-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 320px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    font-family: Arial, sans-serif;
+    direction: rtl;
+    z-index: 1000;
+    overflow: hidden;
+}
+.chat-header {
+    background: #007bff;
+    color: white;
+    padding: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.chat-content {
+    display: block; /* ستكون مفتوحة افتراضياً */
+}
+.chat-messages {
+    height: 250px;
+    padding: 15px;
+    overflow-y: auto;
+    background: #f8f9fa;
+}
+.message {
+    margin-bottom: 12px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    max-width: 80%;
+    font-size: 14px;
+    line-height: 1.4;
+}
+.message.bot {
+    background: #e9ecef;
+    color: #333;
+    align-self: flex-start;
+}
+.message.user {
+    background: #007bff;
+    color: white;
+    margin-left: 0;
+    margin-right: auto;
+    text-align: left;
+}
+.chat-input-area {
+    display: flex;
+    border-top: 1px solid #ddd;
+    padding: 10px;
+    background: #fff;
+}
+.chat-input-area input {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    outline: none;
+}
+.chat-input-area button {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    margin-right: 5px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.chat-input-area button:hover {
+    background: #0056b3;
+}
