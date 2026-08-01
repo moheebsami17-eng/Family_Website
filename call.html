@@ -103,7 +103,7 @@
         }
     </style>
     
-    <!-- السكريبت البرمجي المشغل لخدمة الاتصال المباشر -->
+    <!-- السكريبت البرمجي الآمن والمحدث للاتصال عبر بروتوكول https المدعوم من متصفحك أونلاين -->
     <script src="https://jit.si"></script>
 </head>
 <body>
@@ -131,7 +131,7 @@
         function startCall() {
             const username = document.getElementById('username').value.trim();
             if (username === "") {
-                alert("من فضلك أدخل اسمك أولاً ليشناسق أفراد العائلة من يتحدث.");
+                alert("من فضلك أدخل اسمك أولاً ليعرف أفراد العائلة من يتحدث.");
                 return;
             }
 
@@ -139,7 +139,7 @@
             document.getElementById('setup-area').style.display = 'none';
             document.getElementById('meet-container').style.display = 'block';
 
-            // اسم الغرفة السري الخاص بعائلتكم (يمكنك تغييره لضمان السرية التامة)
+            // اسم الغرفة السري الخاص بعائلتكم
             const roomName = "Sami_Ahmeidan_Family_Private_Room_2026"; 
 
             const domain = "meet.jit.si";
@@ -152,7 +152,6 @@
                     displayName: username
                 },
                 interfaceConfigOverwrite: {
-                    // تخصيص الأزرار التي تظهر للعائلة (إغلاق، كتم، كاميرا، شات)
                     TOOLBAR_BUTTONS: [
                         'microphone', 'camera', 'closedcaptions', 'desktop', 'embedmeeting', 'fullscreen',
                         'factions', 'hangup', 'profile', 'chat', 'recording',
@@ -165,7 +164,7 @@
                 configOverwrite: {
                     startWithAudioMuted: false,
                     startWithVideoMuted: false,
-                    defaultLanguage: "ar" // واجهة البرنامج باللغة العربية بالكامل
+                    defaultLanguage: "ar"
                 }
             };
 
