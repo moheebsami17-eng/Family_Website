@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>مجلس العائلة الرقمي - اتصال فيديو وصوت</title>
-    <!-- استدعاء خط Amiri المتناسق مع موقعك -->
     <link rel="preconnect" href="https://googleapis.com">
     <link rel="preconnect" href="https://gstatic.com" crossorigin>
     <link href="https://googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
@@ -52,14 +51,12 @@
             color: #0d0d0d;
         }
 
-        /* حاوية الفيديو */
         #meet-container {
             flex: 1;
             width: 100%;
             background: #000;
         }
 
-        /* واجهة الدخول قبل بدء الاتصال */
         .setup-box {
             margin: auto;
             padding: 30px;
@@ -103,8 +100,8 @@
         }
     </style>
     
-    <!-- السكريبت البرمجي الآمن والمحدث للاتصال عبر بروتوكول https المدعوم من متصفحك أونلاين -->
-    <script src="https://jit.si"></script>
+    <!-- السكريبت المحدث والمحمي رسمياً لتخطي جدار حماية المتصفحات أونلاين -->
+    <script src="https://unpkg.com"></script>
 </head>
 <body>
 
@@ -114,7 +111,6 @@
         <a href="index.html" class="back-btn">← العودة للرئيسية</a>
     </div>
 
-    <!-- واجهة إدخال الاسم قبل بدء المكالمة -->
     <div id="setup-area" style="display: flex; flex: 1;">
         <div class="setup-box">
             <h3 style="color: #d4af37; margin-top: 0;">مرحباً بك في المجلس</h3>
@@ -124,7 +120,6 @@
         </div>
     </div>
 
-    <!-- الحاوية التي سيظهر فيها الفيديو والتحكم بالصوت -->
     <div id="meet-container" style="display: none;"></div>
 
     <script>
@@ -135,12 +130,11 @@
                 return;
             }
 
-            // إخفاء صندوق الإعداد وإظهار حاوية الاتصال
             document.getElementById('setup-area').style.display = 'none';
             document.getElementById('meet-container').style.display = 'block';
 
-            // اسم الغرفة السري الخاص بعائلتكم
-            const roomName = "Sami_Ahmeidan_Family_Private_Room_2026"; 
+            // غرفة مخصصة فريدة لعائلتك المباركة
+            const roomName = "Sami_Ahmeidan_Abuliah_Family_2026"; 
 
             const domain = "meet.jit.si";
             const options = {
@@ -151,24 +145,16 @@
                 userInfo: {
                     displayName: username
                 },
-                interfaceConfigOverwrite: {
-                    TOOLBAR_BUTTONS: [
-                        'microphone', 'camera', 'closedcaptions', 'desktop', 'embedmeeting', 'fullscreen',
-                        'factions', 'hangup', 'profile', 'chat', 'recording',
-                        'livestreaming', 'etherpad', 'sharedvideo', 'settings', 'raisehand',
-                        'videoquality', 'filmstrip', 'invite', 'feedback', 'stats', 'shortcuts',
-                        'tileview', 'videobackgroundblur', 'download', 'help', 'mute-everyone',
-                        'security'
-                    ],
-                },
                 configOverwrite: {
                     startWithAudioMuted: false,
                     startWithVideoMuted: false,
                     defaultLanguage: "ar"
+                },
+                interfaceConfigOverwrite: {
+                    TOOLBAR_BUTTONS: ['microphone', 'camera', 'chat', 'hangup', 'tileview']
                 }
             };
 
-            // تشغيل البرنامج فوراً
             const api = new JitsiMeetExternalAPI(domain, options);
         }
     </script>
