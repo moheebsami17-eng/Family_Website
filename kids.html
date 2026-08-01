@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ألعاب الأطفال التعليمية | ديوان العائلة</title>
+    <link rel="preconnect" href="https://googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://googleapis.com" rel="stylesheet">
+    <style>
+        body { margin: 0; padding: 30px 10px; background-color: #0b132b; color: #ffffff; font-family: 'Amiri', serif; text-align: center; }
+        .kids-container { background: linear-gradient(145deg, #1c2541, #3a506b); border: 4px solid #ffbc00; max-width: 600px; margin: 0 auto; padding: 25px; border-radius: 20px; box-shadow: 0 15px 30px rgba(0,0,0,0.5); }
+        .game-title { color: #ffbc00; font-size: 2.5rem; margin-bottom: 5px; text-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); }
+        .mode-selection { display: flex; justify-content: center; gap: 15px; margin: 20px 0; }
+        .mode-btn { background-color: #ff5722; color: white; border: none; padding: 12px 25px; font-size: 1.3rem; font-weight: bold; border-radius: 50px; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.3); font-family: 'Amiri', serif; }
+        .mode-btn.en { background-color: #00b4d8; }
+        .game-area { display: none; margin-top: 20px; }
+        .emoji-pic { font-size: 5rem; margin: 15px 0; }
+        .word-display { font-size: 3rem; letter-spacing: 10px; color: #ffffff; margin-bottom: 25px; font-weight: bold; background: rgba(0,0,0,0.2); padding: 10px; border-radius: 10px; display: inline-block; }
+        
+        /* التنسيق الجديد المصلح لعرض الحروف في مكانها الصحيح والمضمون */
+        .letters-grid {
+            display: flex !important;
+            justify-content: center !important;
+            gap: 12px !important;
+            max-width: 90% !important;
+            margin: 20px auto !important;
+            flex-wrap: wrap !important;
+        }
+        .letter-btn {
+            background: #ffffff !important;
+            color: #0b132b !important;
+            border: 3px solid #ffbc00 !important;
+            padding: 12px 25px !important;
+            font-size: 1.8rem !important;
+            font-weight: bold !important;
+            border-radius: 12px !important;
+            cursor: pointer !important;
+            min-width: 60px !important;
+            display: inline-block !important;
+            margin: 4px !important;
+            transition: all 0.2s;
+        }
+        .letter-btn:hover { background: #ffbc00 !important; }
+        .letter-btn.correct { background-color: #2ec4b6 !important; color: white !important; border-color: #2ec4b6 !important; }
+        .letter-btn.wrong { background-color: #e63946 !important; color: white !important; border-color: #e63946 !important; }
+        
+        .score-text { font-size: 1.5rem; color: #ffbc00; font-weight: bold; margin-bottom: 10px; text-align: center; }
+        .result-screen { font-size: 2rem; color: #ffbc00; display: none; }
+        .back-btn { display: inline-block; margin-top: 25px; color: #ffbc00; text-decoration: none; border: 2px solid #ffbc00; padding: 8px 25px; font-weight: bold; border-radius: 25px; }
+    </style>
+    
+    <!-- استدعاء ملف الأسئلة الخارجي المصلح بنجاح -->
+    <script src="kidsData.js"></script>
+</head>
+<body>
+
+    <div class="kids-container">
+        <h1 class="game-title">🎈 لغز الكلمات الذكي 🧸</h1>
+        <p style="font-size: 1.2rem; color: #e0e1dd; margin: 0;">اختر اللغة وابدأ اللعب والتعلم يا بطل!</p>
+
+        <!-- شاشة اختيار اللغة -->
+        <div id="selection-screen">
+            <div class="mode-selection">
+                <button class="mode-btn ar" onclick="startGame('ar')">🇸🇦 كلمات عربية</button>
+                <button class="mode-btn en" onclick="startGame('en')">🇬🇧 English Words</button>
+            </div>
+        </div>
+
+        <!-- منطقة اللعب النشطة -->
+        <div id="game-card" class="game-area">
+            <div class="score-text" id="score-indicator">الكلمة: 1 / 20 | النقاط ⭐: 0</div>
+            <div class="emoji-pic" id="emoji-graphic">🍎</div>
+            <div class="word-display" id="word-hidden">تفـ_ح</div>
+            <p style="color: #ffbc00; font-size: 1.2rem; margin-bottom: 10px;">اضغط على الحرف الصحيح لتكملة الكلمة:</p>
+            <div class="letters-grid" id="letters-container"></div>
+        </div>
+
+        <!-- شاشة النهاية والتهنئة -->
+        <div id="result-card" class="result-screen">
+            <p>🥳 كفوو يا بطل! لقد فزت في اللعبة 🏆</p>
+            <p id="final-msg" style="color: white; font-size: 1.5rem;"></p>
+            <button onclick="resetGame()" class="back-btn" style="cursor:pointer; background:none; font-family:'Amiri';">العب مرة أخرى 🔄</button>
+        </div>
+
+        <br>
+        <a href="index.html" class="back-btn">← العودة للرئيسية</a>
+    </div>
+
+    <script>
+        var currentGameMode = 'ar';
+        var currentWordIndex = 0;
+        var score = 0;
+        var canClick = true;
+
+        function startGame(mode) {
+            currentGameMode = mode;
+            document.getElementById('selection-screen').style.display = 'none';
+            document.getElementById('game-card').style.display = 'block';
+            loadNextWord();
+        }
+
+        function loadNextWord() {
+            canClick = true;
+            var container = document.getElementById('letters-container');
+            if(!container) return;
+            container.innerHTML = "";
+            
+            var list = wordsBank[currentGameMode];
+            var currentItem = list[currentWordIndex];
+            
+            if (currentGameMode === 'ar') {
+                document.getElementById('score-indicator').innerText = "الكلمة: " + (currentWordIndex + 1) + " / " + list.length + " | النقاط ⭐: " + score;
+            } else {
+                document.getElementById('score-indicator').innerText = "Word: " + (currentWordIndex + 1) + " / " + list.length + " | Score ⭐: " + score;
+            }
+            
+            document.getElementById('emoji-graphic').innerText = currentItem.emoji;
+            document.getElementById('word-hidden').innerText = currentItem.hidden;
+
+            currentItem.options.forEach(function(letter) {
+                var btn = document.createElement('button');
+                btn.innerText = letter;
+                btn.className = 'letter-btn';
+                btn.onclick = function() { checkChildAnswer(letter, btn); };
+                container.appendChild(btn);
+            });
+        }
+
+        function checkChildAnswer(selectedLetter, clickedBtn) {
+            if (!canClick) return;
+            canClick = false;
+
+            var list = wordsBank[currentGameMode];
+            var currentItem = list[currentWordIndex];
+
+            if (selectedLetter === currentItem.missingLetter) {
+                clickedBtn.className = 'letter-btn correct';
+                document.getElementById('word-hidden').innerText = currentItem.word;
+                score += 10;
+            } else {
+                clickedBtn.className = 'letter-btn wrong';
+                var buttons = document.getElementById('letters-container').getElementsByClassName('letter-btn');
+                for(var i = 0; i < buttons.length; i++) {
+                    if(buttons[i].innerText === currentItem.missingLetter) {
+                        buttons[i].className = 'letter-btn correct';
+                    }
+                }
+            }
+
+            setTimeout(function() {
+                currentWordIndex++;
+                if (currentWordIndex < list.length) {
+                    loadNextWord();
+                } else {
+                    finishGame();
+                }
+            }, 1200);
+        }
+
+        function finishGame() {
+            document.getElementById('game-card').style.display = 'none';
+            document.getElementById('result-card').style.display = 'block';
+            var list = wordsBank[currentGameMode];
+            document.getElementById('final-msg').innerText = currentGameMode === 'ar' ? 'مجموع نقاطك الرائعة هي: ' + score + ' من ' + (list.length * 10) + ' نقطة!' : 'Your total score is: ' + score + ' out of ' + (list.length * 10) + ' points!';
+        }
+
+        function resetGame() {
+            currentWordIndex = 0;
+            score = 0;
+            document.getElementById('result-card').style.display = 'none';
+            document.getElementById('selection-screen').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
