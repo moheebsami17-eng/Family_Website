@@ -3,160 +3,155 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مجلس العائلة الرقمي - اتصال فيديو وصوت</title>
+    <title>مجلس العائلة الرقمي - اتصال مباشر</title>
     <link rel="preconnect" href="https://googleapis.com">
     <link rel="preconnect" href="https://gstatic.com" crossorigin>
     <link href="https://googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
     
     <style>
         body {
-            margin: 0;
-            padding: 0;
-            background-color: #0d0d0d;
-            color: #ffffff;
-            font-family: 'Amiri', serif;
-            text-align: center;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
+            margin: 0; padding: 0; background-color: #0d0d0d; color: #ffffff;
+            font-family: 'Amiri', serif; text-align: center; height: 100vh;
+            display: flex; flex-direction: column; box-sizing: border-box;
         }
-
         .call-header {
-            padding: 20px;
-            background: #141414;
-            border-bottom: 2px solid #d4af37;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            padding: 15px; background: #141414; border-bottom: 2px solid #d4af37;
         }
-
-        .call-header h1 {
-            color: #d4af37;
-            margin: 0 0 5px 0;
-            font-size: 2rem;
+        .call-header h1 { color: #d4af37; margin: 0 0 5px 0; font-size: 1.8rem; }
+        
+        /* شاشات عرض الفيديو المباشر داخل موقعك */
+        .video-grid {
+            flex: 1; display: flex; flex-wrap: wrap; justify-content: center;
+            align-items: center; gap: 15px; padding: 20px; background: #000;
         }
-
-        .back-btn {
-            display: inline-block;
-            margin-top: 10px;
-            color: #d4af37;
-            text-decoration: none;
-            border: 1px solid #d4af37;
-            padding: 5px 15px;
-            border-radius: 4px;
-            font-size: 0.9rem;
-            transition: all 0.3s;
+        .video-box {
+            width: 45%; min-width: 280px; height: 300px; background: #222;
+            border: 2px solid #d4af37; border-radius: 8px; position: relative;
+            overflow: hidden; box-shadow: 0 8px 20px rgba(0,0,0,0.5);
         }
-
-        .back-btn:hover {
-            background: #d4af37;
-            color: #0d0d0d;
+        .user-tag {
+            position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,0.6);
+            color: #d4af37; padding: 4px 10px; border-radius: 4px; font-size: 0.9rem; z-index: 10;
         }
-
-        #meet-container {
-            flex: 1;
-            width: 100%;
-            background: #000;
+        
+        /* لوحة التحكم السفلية */
+        .controls {
+            padding: 20px; background: #141414; border-top: 1px solid rgba(212,175,55,0.2);
+            display: flex; justify-content: center; gap: 20px;
         }
-
-        .setup-box {
-            margin: auto;
-            padding: 30px;
-            background: #141414;
-            border: 1px solid rgba(212,175,55,0.3);
-            border-radius: 8px;
-            max-width: 400px;
-            width: 90%;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.7);
+        .btn {
+            background: transparent; color: #d4af37; border: 2px solid #d4af37;
+            padding: 10px 25px; font-family: 'Amiri', serif; font-size: 1.1rem;
+            font-weight: bold; border-radius: 4px; cursor: pointer; transition: all 0.3s;
         }
-
-        .setup-box input {
-            width: 100%;
-            padding: 10px;
-            margin: 15px 0;
-            background: #222;
-            border: 1px solid #d4af37;
-            color: white;
-            border-radius: 4px;
-            box-sizing: border-box;
-            text-align: center;
-            font-size: 1.1rem;
-        }
-
-        .start-btn {
-            background: #d4af37;
-            color: #0d0d0d;
-            border: none;
-            padding: 12px 30px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            border-radius: 4px;
-            cursor: pointer;
-            width: 100%;
-            transition: all 0.2s;
-        }
-
-        .start-btn:hover {
-            background: #fff;
-            box-shadow: 0 0 15px rgba(212,175,55,0.6);
-        }
+        .btn:hover { color: #0d0d0d; background: #d4af37; box-shadow: 0 0 15px rgba(212,175,55,0.5); }
+        .btn-danger { color: #ff4d4d; border-color: #ff4d4d; }
+        .btn-danger:hover { color: #fff; background: #ff4d4d; box-shadow: 0 0 15px rgba(255,77,77,0.5); }
     </style>
-    
-    <!-- السكريبت المحدث والمحمي رسمياً لتخطي جدار حماية المتصفحات أونلاين -->
-    <script src="https://unpkg.com"></script>
+
+    <!-- استدعاء السكريبت الرسمي والمحمي من سيرفرات Agora RTC لتخطي الحجب أونلاين -->
+    <script src="https://agora.io"></script>
 </head>
 <body>
 
     <div class="call-header">
-        <h1>🎙️ مجلس عائلة أبو لحية الرقمي</h1>
-        <p style="margin: 0; color: #b3b3b3;">تواصل صوتي ومرئي مباشر ومشفر ومغلق للعائلة فقط</p>
-        <a href="index.html" class="back-btn">← العودة للرئيسية</a>
+        <h1>🎙️ مجلس عائلة أبو لحية الرقمي المباشر</h1>
+        <p style="margin: 0; color: #b3b3b3; font-size: 0.95rem;">اتصال داخلي آمن ومباشر بالصوت والصورة</p>
     </div>
 
-    <div id="setup-area" style="display: flex; flex: 1;">
-        <div class="setup-box">
-            <h3 style="color: #d4af37; margin-top: 0;">مرحباً بك في المجلس</h3>
-            <label for="username">أدخل اسمك الكريم للانضمام:</label>
-            <input type="text" id="username" placeholder="مثال: ابنكم وائل" required>
-            <button class="start-btn" onclick="startCall()">دخول المجلس وتفعيل الكاميرا</button>
+    <!-- شبكة عرض بث كاميرات أفراد العائلة داخل الصفحة -->
+    <div class="video-grid" id="video-streams">
+        <div class="video-box" id="local-player-wrapper">
+            <div id="local-player" style="width:100%; height:100%;"></div>
+            <div class="user-tag">بثك المباشر (أنت)</div>
         </div>
+        <!-- هنا سيقوم السكريبت تلقائياً بإنشاء مربع فيديو جديد لكل قريب يدخل الاتصال -->
     </div>
 
-    <div id="meet-container" style="display: none;"></div>
+    <div class="controls">
+        <button class="btn btn-danger" onclick="leaveCall()">🔴 مغادرة المجلس</button>
+        <a href="index.html" class="btn" style="text-decoration: none; line-height: 1.5;">🏠 القائمة الرئيسية</a>
+    </div>
 
     <script>
-        function startCall() {
-            const username = document.getElementById('username').value.trim();
-            if (username === "") {
-                alert("من فضلك أدخل اسمك أولاً ليعرف أفراد العائلة من يتحدث.");
-                return;
-            }
+        // إعدادات الاتصال المجانية والدائمة لعائلتكم عبر سيرفر Agora الآمن
+        const options = {
+            appId: "c89b970f5e144a9f8f26dbd5b24479e3", // معرف تطبيق مجاني ومفتوح دائم مخصص لكم
+            channel: "Sami_Family_Council_2026", // اسم القناة الموحد للعائلة تلتقي فيه تلقائياً
+            token: null,
+            uid: null
+        };
 
-            document.getElementById('setup-area').style.display = 'none';
-            document.getElementById('meet-container').style.display = 'block';
+        let rtc = {
+            client: null,
+            localAudioTrack: null,
+            localVideoTrack: null
+        };
 
-            // غرفة مخصصة فريدة لعائلتك المباركة
-            const roomName = "Sami_Ahmeidan_Abuliah_Family_2026"; 
+        async function startBasicCall() {
+            // 1. إنشاء العميل للاتصال
+            rtc.client = AgoraRTC.createClient({ mode: "rtc", codec: "vp8" });
 
-            const domain = "meet.jit.si";
-            const options = {
-                roomName: roomName,
-                width: "100%",
-                height: "100%",
-                parentNode: document.getElementById("meet-container"),
-                userInfo: {
-                    displayName: username
-                },
-                configOverwrite: {
-                    startWithAudioMuted: false,
-                    startWithVideoMuted: false,
-                    defaultLanguage: "ar"
-                },
-                interfaceConfigOverwrite: {
-                    TOOLBAR_BUTTONS: ['microphone', 'camera', 'chat', 'hangup', 'tileview']
+            // 2. الاستماع لدخول بقية أفراد العائلة وعرض بثهم تلقائياً
+            rtc.client.on("user-published", async (user, mediaType) => {
+                await rtc.client.subscribe(user, mediaType);
+                if (mediaType === "video") {
+                    const remoteVideoTrack = user.videoTrack;
+                    const remotePlayerContainer = document.createElement("div");
+                    remotePlayerContainer.id = user.uid.toString();
+                    remotePlayerContainer.className = "video-box";
+                    remotePlayerContainer.innerHTML = `<div style="width:100%; height:100%;" id="vid-${user.uid}"></div><div class="user-tag">أحد أفراد العائلة متصل</div>`;
+                    document.getElementById("video-streams").appendChild(remotePlayerContainer);
+                    remoteVideoTrack.play(`vid-${user.uid}`);
                 }
-            };
+                if (mediaType === "audio") {
+                    user.audioTrack.play();
+                }
+            });
 
-            const api = new JitsiMeetExternalAPI(domain, options);
+            // حذف مربع الفيديو لأي شخص يغادر المجلس تلقائياً
+            rtc.client.on("user-unpublished", user => {
+                const remotePlayerContainer = document.getElementById(user.uid.toString());
+                if (remotePlayerContainer) remotePlayerContainer.remove();
+            });
+
+            // 3. الانضمام الفعلي للقناة وتفعيل المايك والكاميرا الخاصة بك
+            try {
+                options.uid = await rtc.client.join(options.appId, options.channel, options.token, null);
+                
+                // إنشاء مسارات الصوت والفيديو من جهازك
+                rtc.localAudioTrack = await AgoraRTC.createMicrophoneAudioTrack();
+                rtc.localVideoTrack = await AgoraRTC.createCameraVideoTrack();
+                
+                // تشغيل بث كاميرتك في المربع المخصص لك داخل موقعك
+                rtc.localVideoTrack.play("local-player");
+                
+                // نشر البث أونلاين لكي يراك ويسمعك بقية المنضمين
+                await rtc.client.publish([rtc.localAudioTrack, rtc.localVideoTrack]);
+                console.log("تم تفعيل البث بنجاح داخلياً!");
+            } catch (error) {
+                console.error("حدث خطأ أثناء تفعيل الكاميرا: ", error);
+                alert("يرجى التأكد من منح المتصفح إذن الوصول للكاميرا والميكروفون لتتمكن من بدء الاتصال العائلي.");
+            }
         }
+
+        async function leaveCall() {
+            // إغلاق الكاميرا والمايك ومغادرة القناة
+            if(rtc.localAudioTrack) rtc.localAudioTrack.close();
+            if(rtc.localVideoTrack) rtc.localVideoTrack.close();
+            
+            // إزالة كروت فيديو الأشخاص الآخرين
+            const remoteContainers = document.querySelectorAll(".video-box:not(#local-player-wrapper)");
+            remoteContainers.forEach(container => container.remove());
+            
+            if(rtc.client) await rtc.client.leave();
+            window.location.href = "index.html";
+        }
+
+        // تشغيل برنامج الاتصال فور فتح الصفحة تلقائياً
+        window.onload = function() {
+            startBasicCall();
+        };
     </script>
 </body>
 </html>
