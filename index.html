@@ -124,6 +124,44 @@
             📞 دخول مجلس العائلة المباشر (صوت وفيديو)
         </a>
     </div>
+<div id="chat-container">
+    <!-- مكان ظهور الرسائل -->
+    <ul id="messages"></ul>
+    
+    <!-- صندوق إرسال الرسالة -->
+    <form id="chat-form" action="">
+        <input id="chat-input" autocomplete="off" placeholder="اكتب رسالتك هنا..." />
+        <button>إرسال</button>
+    </form>
+</div>
+
+<!-- ربط مكتبة Socket.io الخاصة بالواجهة -->
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    const socket = io();
+
+    const form = document.getElementById('chat-form');
+    const input = document.getElementById('chat-input');
+    const messages = document.getElementById('messages');
+
+    // عند الضغط على زر الإرسال
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        if (input.value) {
+            // إرسال الرسالة إلى الخادم
+            socket.emit('chat message', input.value);
+            input.value = '';
+        }
+    });
+
+    // استقبال الرسائل القادمة من الخادم وعرضها فوراً
+    socket.on('chat message', (msg) => {
+        const item = document.createElement('li');
+        item.textContent = msg;
+        messages.appendChild(item);
+        window.scrollTo(0, document.body.scrollHeight);
+    });
+</script>
 
 </body>
 </html>
